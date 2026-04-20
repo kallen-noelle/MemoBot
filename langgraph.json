@@ -1,0 +1,14 @@
+{
+  "$schema": "https://langgra.ph/schema.json",
+  "python_version": "3.12",
+  "dependencies": [
+    "."
+  ],
+  "env": ".env",
+  "graphs": {
+    "lead_agent": "backend.agent:make_lead_agent"
+  },
+  "checkpointer": {
+    "path": "backend.agent/checkpointer/async_provider.py:make_checkpointer"
+  }
+}

@@ -1,0 +1,81 @@
+models:
+  - name: qwen-plus
+    display_name: qwen
+    use: langchain_openai:ChatOpenAI
+    model: qwen-plus
+    api_key:
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    supports_thinking: true
+    
+vector_db: 
+  use: langchain_community:Chroma
+  embedding_model_name: text-embedding-v4
+  api_key:
+  chunk_size: 256
+  chunk_overlap: 64
+  top_k_graph: 5
+  top_k_documents: 5
+  top_k_bm25: 5
+
+
+memory:
+  enabled: true
+  storage_path: memory.json # Path relative to backend directory
+  debounce_seconds: 3 # Wait time before processing queued updates
+  model_name: null # Use default model
+  max_facts: 100 # Maximum number of facts to store
+  fact_confidence_threshold: 0.7 # Minimum confidence for storing facts
+  injection_enabled: true # Whether to inject memory into system prompt
+  max_injection_tokens: 2000 # Maximum tokens for memory injection
+checkpointer:
+  type: sqlite
+  connection_string: checkpoints.db
+summarization:
+  enabled: true
+
+  # Model to use for summarization (null = use default model)
+  # Recommended: Use a lightweight, cost-effective model like "gpt-4o-mini" or similar
+  model_name: null
+
+  trigger:
+    # Trigger when token count reaches 15564
+    - type: tokens
+      value: 15564
+
+  keep:
+    # Keep the most recent 10 messages (recommended)
+    type: messages
+    value: 10
+
+  trim_tokens_to_summarize: 15564
+
+  # Custom summary prompt template (null = use default LangChain prompt)
+  # The prompt should guide the model to extract important context
+  summary_prompt: null
+title:
+  enabled: true
+  max_words: 6
+  max_chars: 60
+  model_name: null # Use default model (first model in models list
+
+tools:
+
+# - name: web_search
+#   group: web
+#   use: backend.tools.community.web.tavily.tools:web_search_tool
+#   max_results: 5
+
+# - name: web_fetch
+#   group: web
+#   use: backend.tools.community.web.jina_ai.tools:web_fetch_tool
+#   timeout: 10
+
+
+  - name: image_search
+    group: web
+    use: backend.tools.community.image_search.tools:image_search_tool
+    max_results: 5
+
+
+tool_search:
+  enabled: false
