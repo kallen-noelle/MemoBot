@@ -14,9 +14,7 @@ MemoBot 是一个基于AI的智能记忆助手应用，能够帮助用户记住�
 ## 演示
 
 查看MemoBot的实际运行效果：
-
-![MemoBot界面截图](./docs/memobot-screenshot.png)
-
+![MemoBot界面截图](./docs/1.png)
 ## 技术架构
 
 MemoBot采用现代化的技术栈构建：
